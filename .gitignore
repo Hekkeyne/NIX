@@ -1,3 +1,11 @@
 # Godot 4+ specific ignores
 .godot/
+.vs/
+.idea/
+bin/
+obj/
+*.user
+export/
+builds/
+tests/TestResults/
 /android/

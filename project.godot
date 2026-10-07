@@ -11,22 +11,22 @@ config_version=5
 [application]
 
 config/name="NIX"
-run/main_scene="uid://e3ug0p20tl10"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 run/delta_smoothing=false
 boot_splash/bg_color=Color(0.15294118, 0.15294118, 0.15294118, 1)
 boot_splash/stretch_mode=0
-boot_splash/image="uid://brsp2dd6ebdom"
+boot_splash/image="uid://bn22btp8fbp8t"
 config/icon="uid://brsp2dd6ebdom"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=512
+window/size/viewport_height=288
 window/size/mode=3
 window/size/borderless=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
 window/vsync/vsync_mode=0
 
 [dotnet]

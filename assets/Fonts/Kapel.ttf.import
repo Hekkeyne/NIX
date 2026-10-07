@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://e5d8pqkyweym"
-path="res://.godot/imported/Kapel.ttf-7a574e578a1e8930a3a33311cae3b69d.fontdata"
+path="res://.godot/imported/Kapel.ttf-45d4b74fe54f826002cecaa24af30ae5.fontdata"
 
 [deps]
 
-source_file="res://Fonts/Kapel.ttf"
-dest_files=["res://.godot/imported/Kapel.ttf-7a574e578a1e8930a3a33311cae3b69d.fontdata"]
+source_file="res://assets/Fonts/Kapel.ttf"
+dest_files=["res://.godot/imported/Kapel.ttf-45d4b74fe54f826002cecaa24af30ae5.fontdata"]
 
 [params]
 

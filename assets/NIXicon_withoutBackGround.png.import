@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brsp2dd6ebdom"
-path="res://.godot/imported/APPicon.png-610a812b0353b920a157858e53c02ca5.ctex"
+uid="uid://blqs4jhvhkav5"
+path="res://.godot/imported/NIXicon_withoutBackGround.png-e7bc9b049beadf49c17ec9363c141c17.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://APPicon.png"
-dest_files=["res://.godot/imported/APPicon.png-610a812b0353b920a157858e53c02ca5.ctex"]
+source_file="res://assets/NIXicon_withoutBackGround.png"
+dest_files=["res://.godot/imported/NIXicon_withoutBackGround.png-e7bc9b049beadf49c17ec9363c141c17.ctex"]
 
 [params]
 
