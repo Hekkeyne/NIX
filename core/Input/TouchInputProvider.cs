@@ -1,15 +1,31 @@
 using Godot;
-using System;
+using Nix.Core.Input;
 
-public partial class TouchInputProvider : Node
+namespace Nix.Services.Input;
+public sealed class TouchInputProvider : IInputProvider
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+    private const float StickDeadzone = 0.2f;
+    private readonly TouchInputState _state;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    public TouchInputProvider(TouchInputState state) => _state = state;
+
+    public InputSnapshot Poll()
+    {
+        var snapshot = new InputSnapshot
+        {
+            Move = ApplyDeadzone(_state.Move),
+            AimStick = ApplyDeadzone(_state.AimStick),
+            AimFromPointer = false,
+            RollPressed = _state.RollPressed,
+            InteractPressed = _state.InteractPressed,
+            SwapWeaponPressed = _state.SwapWeaponPressed,
+            UseActivePressed = _state.UseActivePressed,
+            PausePressed = false,
+        };
+        _state.ClearFrame();
+        return snapshot;
+    }
+
+    private static Vector2 ApplyDeadzone(Vector2 v)
+        => v.Length() < StickDeadzone ? Vector2.Zero : v.Normalized();
 }

@@ -1,15 +1,18 @@
-using Godot;
-using System;
-
-public partial class SettingsService : Node
+using Nix.Core.Events;
+namespace Nix.Services.Settings;
+public enum AimAssistMode { Auto,On,Off}
+public sealed class SettingsService
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    private readonly EventBus _bus;
+    public AimAssistMode AimAssist { get;private set;  }=AimAssistMode.Auto;
+    public SettingsService(EventBus bus)
+    {
+        _bus = bus;
+    }
+    public void SetAimAssist(AimAssistMode mode)
+    {
+        if (AimAssist == mode) return;
+        AimAssist = mode;
+        _bus.Publish(new SettingsChangedEvent());
+    }
 }

@@ -1,15 +1,44 @@
 using Godot;
-using System;
-
+using Nix.Core.Events;
+using Nix.Services.Input;
+using Nix.Services.Settings;
+namespace Nix.Services.Bootstrap;
 public partial class GameBootstrap : Node
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+    public static GameBootstrap Instance { get; private set; } = null!;
+    public ServiceRegistry Services { get; private set; } = null!;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    public override void _EnterTree()
+    {
+        Instance = this;
+        Services = new ServiceRegistry();
+        var eventBus = new EventBus();
+        Services.Register(eventBus);
+        Services.Register(new SettingsService(eventBus));
+        var touchState = new TouchInputState();
+        Services.Register(touchState);
+        Services.Register(new InputService(
+            Services.Get<SettingsService>(),
+            touchState,
+            eventBus,
+            pointerViewportPos: () => GetViewport().GetMousePosition()));
+    }
+
+    public override void _Process(double delta)
+        => Services.Get<InputService>().Poll();
+
+    public override void _ExitTree()
+    {
+        Services.Get<InputService>().Dispose();
+
+        if (Instance == this)
+            Instance = null!;
+    }
+}
+public static class NodeServicesExtensions
+{
+    public static ServiceRegistry Services(this Node node) => GameBootstrap.Instance.Services;
+
+    public static T Svc<T>(this Node node) where T : class =>
+        GameBootstrap.Instance.Services.Get<T>();
 }

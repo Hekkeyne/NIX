@@ -1,15 +1,16 @@
 using Godot;
-using System;
-
-public partial class InputSnapshot : Node
+namespace Nix.Core.Input;
+public readonly record struct InputSnapshot
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+    public Vector2 Move { get; init; }
+    public Vector2 AimStick { get; init; }
+    public bool AimFromPointer { get; init; }
+    public Vector2 PointerViewportPos { get; init;  }
+    public bool RollPressed { get; init; }
+    public bool InteractPressed { get; init; }
+    public bool SwapWeaponPressed { get; init; }
+    public bool UseActivePressed { get; init; }
+    public bool PausePressed { get; init; }
+    public static InputSnapshot Empty => new();
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }
