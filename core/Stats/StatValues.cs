@@ -15,7 +15,7 @@ public readonly record struct StatValues
         Signal = 0,
         Shell = 0,
         MaxHp = 0,
-        MoveSpeed = 0,
+        MoveSpeed = 200,
         BaseDamage = 0
     };
     public int Get(BuildColor attr) => attr switch

@@ -23,14 +23,13 @@ public partial class GameBootstrap : Node
             eventBus,
             pointerViewportPos: () => GetViewport().GetMousePosition()));
     }
-
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
         => Services.Get<InputService>().Poll();
-
+    public override void _UnhandledInput(InputEvent @event)
+        => Services.Get<InputService>().OnInputEvent(@event);
     public override void _ExitTree()
     {
         Services.Get<InputService>().Dispose();
-
         if (Instance == this)
             Instance = null!;
     }
@@ -38,7 +37,6 @@ public partial class GameBootstrap : Node
 public static class NodeServicesExtensions
 {
     public static ServiceRegistry Services(this Node node) => GameBootstrap.Instance.Services;
-
     public static T Svc<T>(this Node node) where T : class =>
         GameBootstrap.Instance.Services.Get<T>();
 }

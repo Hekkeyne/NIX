@@ -34,6 +34,6 @@ public sealed class InputService : IDisposable
             _ => _deviceIsTouch,
         };
     }
-
+    public void OnInputEvent(InputEvent e) => ActiveProvider.OnInputEvent(e);
     public void Dispose() => _settingsToken.Dispose();
 }

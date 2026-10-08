@@ -25,7 +25,7 @@ public sealed class TouchInputProvider : IInputProvider
         _state.ClearFrame();
         return snapshot;
     }
-
+    public void OnInputEvent(InputEvent e) { }
     private static Vector2 ApplyDeadzone(Vector2 v)
         => v.Length() < StickDeadzone ? Vector2.Zero : v.Normalized();
 }

@@ -7,27 +7,46 @@ public sealed class DesktopInputProvider : IInputProvider
 {
     private const float StickDeadZone = 0.25f;
     private readonly Func<Vector2> _pointerViewportpos;
+    private bool _pendingRoll;
+    private bool _pendingInteract;
+    private bool _pendingSwapWeapon;
+    private bool _pendingUseActive;
+    private bool _pendingPause;
     public DesktopInputProvider(Func<Vector2> pointerViewportPos)
     {
         ArgumentNullException.ThrowIfNull(pointerViewportPos);
         _pointerViewportpos = pointerViewportPos;
     }
+    public void OnInputEvent(InputEvent e)
+    {
+        if (e.IsActionPressed("roll")) _pendingRoll = true;
+        if (e.IsActionPressed("interact")) _pendingInteract = true;
+        if (e.IsActionPressed("swap_weapon")) _pendingSwapWeapon = true;
+        if (e.IsActionPressed("use_active")) _pendingUseActive = true;
+        if (e.IsActionPressed("pause")) _pendingPause = true;
+    }
     public InputSnapshot Poll()
     {
-        var move = GdInput.GetVector("move_left", "move_right", "move_down", "move_up");
-        var aimStick = GdInput.GetVector("aim_left", "aim_right", "aim_down", "aim_up");
+        var move = GdInput.GetVector("move_left", "move_right", "move_up", "move_down");
+        var aimStick = GdInput.GetVector("aim_left", "aim_right", "aim_up", "aim_down");
         aimStick = aimStick.Length() < StickDeadZone ? Vector2.Zero : aimStick.Normalized();
-        return new InputSnapshot
+        var snapshot = new InputSnapshot
         {
             Move = move,
             AimStick = aimStick,
             AimFromPointer = aimStick == Vector2.Zero,
             PointerViewportPos = _pointerViewportpos(),
-            RollPressed = GdInput.IsActionJustPressed("roll"),
-            InteractPressed = GdInput.IsActionJustPressed("interact"),
-            SwapWeaponPressed = GdInput.IsActionJustPressed("swap_weapon"),
-            UseActivePressed = GdInput.IsActionJustPressed("use_active"),
-            PausePressed = GdInput.IsActionJustPressed("pause"),
+            RollPressed = _pendingRoll,
+            InteractPressed = _pendingInteract,
+            SwapWeaponPressed = _pendingSwapWeapon,
+            UseActivePressed = _pendingUseActive,
+            PausePressed = _pendingPause,
         };
+        _pendingRoll = false;
+        _pendingInteract = false;
+        _pendingSwapWeapon = false;
+        _pendingUseActive = false;
+        _pendingPause = false;
+        return snapshot;
     }
 }
